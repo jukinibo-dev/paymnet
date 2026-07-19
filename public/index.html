@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wigata Payment</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace" aria-label="Wigata payment interface">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Wigata Intech</p>
+            <h1>Collect Payment</h1>
+          </div>
+          <div id="credentialBadge" class="badge">Checking config</div>
+        </header>
+
+        <div class="layout">
+          <section class="panel form-panel">
+            <div class="segmented" role="tablist" aria-label="Metode pembayaran">
+              <button id="methodVa" class="segment active" type="button" data-method="VIRTUAL_ACCOUNT">Virtual Account</button>
+              <button id="methodQris" class="segment" type="button" data-method="QRIS">QRIS</button>
+            </div>
+
+            <form id="paymentForm" class="payment-form">
+              <label>
+                Amount
+                <input id="amount" name="amount" type="number" min="1" step="1" value="10000" required />
+              </label>
+
+              <label id="bankField">
+                Bank VA
+                <select id="bankCode" name="bankCode">
+                  <option value="013">PERMATA - 013</option>
+                  <option value="002">BRI - 002</option>
+                  <option value="008">MANDIRI - 008</option>
+                  <option value="014">BCA - 014</option>
+                  <option value="022">CIMB - 022</option>
+                  <option value="490">BNC - 490</option>
+                </select>
+              </label>
+
+              <label>
+                Nama deskripsi
+                <input id="descriptionName" name="descriptionName" type="text" value="Pembayaran UNPRI" maxlength="80" />
+              </label>
+
+              <label>
+                Statement descriptor
+                <input id="statementDescriptor" name="statementDescriptor" type="text" value="Universitas Prima" maxlength="80" />
+              </label>
+
+              <label>
+                Client reference ID
+                <input id="clientReferenceId" name="clientReferenceId" type="text" placeholder="Auto generated jika kosong" />
+              </label>
+
+              <label>
+                Expired time
+                <select id="expiredInHours" name="expiredInHours">
+                  <option value="1">1 jam</option>
+                  <option value="2">2 jam</option>
+                  <option value="3">3 jam</option>
+                  <option value="4">4 jam</option>
+                  <option value="5">5 jam</option>
+                  <option value="6">6 jam</option>
+                  <option value="7">7 jam</option>
+                  <option value="8">8 jam</option>
+                  <option value="9">9 jam</option>
+                  <option value="10">10 jam</option>
+                  <option value="11">11 jam</option>
+                  <option value="12">12 jam</option>
+                  <option value="13">13 jam</option>
+                  <option value="14">14 jam</option>
+                  <option value="15">15 jam</option>
+                  <option value="16">16 jam</option>
+                  <option value="17">17 jam</option>
+                  <option value="18">18 jam</option>
+                  <option value="19">19 jam</option>
+                  <option value="20">20 jam</option>
+                  <option value="21">21 jam</option>
+                  <option value="22">22 jam</option>
+                  <option value="23">23 jam</option>
+                  <option value="24">24 jam</option>
+                </select>
+              </label>
+
+              <div class="switch-row">
+                <span>Generate payment link</span>
+                <input id="generatePaymentLink" name="generatePaymentLink" type="checkbox" checked />
+              </div>
+
+              <div class="switch-row">
+                <span>Tambah fee ke surcharge</span>
+                <input id="addPaymentFeeToSurcharge" name="addPaymentFeeToSurcharge" type="checkbox" />
+              </div>
+
+              <button id="submitButton" class="primary" type="submit">Create Payment</button>
+            </form>
+          </section>
+
+          <section class="panel result-panel">
+            <div class="result-head">
+              <div>
+                <p class="eyebrow">Payment Status</p>
+                <h2 id="statusTitle">Belum ada pembayaran</h2>
+              </div>
+              <div id="statusBadge" class="status idle">IDLE</div>
+            </div>
+
+            <div id="emptyState" class="empty-state">
+              Buat VA atau QRIS untuk menampilkan detail collect payment.
+            </div>
+
+            <div id="paymentResult" class="payment-result hidden">
+              <div id="qrisBox" class="qris-box hidden">
+                <img id="qrisImage" alt="QRIS" />
+                <textarea id="qrisContent" readonly></textarea>
+              </div>
+
+              <div id="vaBox" class="va-box hidden">
+                <span>Virtual Account</span>
+                <strong id="vaNumber">-</strong>
+                <button id="copyVa" class="secondary" type="button">Copy VA</button>
+              </div>
+
+              <dl class="details">
+                <div>
+                  <dt>Payment ID</dt>
+                  <dd id="paymentId">-</dd>
+                </div>
+                <div>
+                  <dt>Reference</dt>
+                  <dd id="referenceId">-</dd>
+                </div>
+                <div>
+                  <dt>Method</dt>
+                  <dd id="paymentMethod">-</dd>
+                </div>
+                <div>
+                  <dt>Total</dt>
+                  <dd id="paymentTotal">-</dd>
+                </div>
+                <div>
+                  <dt>Expired</dt>
+                  <dd id="expiredAt">-</dd>
+                </div>
+                <div>
+                  <dt>Payment link</dt>
+                  <dd><a id="paymentLink" href="#" target="_blank" rel="noreferrer">-</a></dd>
+                </div>
+              </dl>
+
+              <pre id="rawResponse"></pre>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
